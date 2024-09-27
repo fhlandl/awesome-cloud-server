@@ -12,5 +12,13 @@ spring:
       hibernate:
         format_sql: true
 
+server:
+  error:
+    include-exception: true
+    include-message: always
+
+file:
+  dir: ${user.home}/test/awesome/awesome_file_dir/
+
 logging.level:
   org.hibernate.SQL: debug
