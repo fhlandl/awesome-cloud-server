@@ -1,0 +1,19 @@
+spring:
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/language/vite/awesome/awesome
+#    username: sa
+#    password: sa
+#    driver-class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        format_sql: true
+
+file:
+  dir: ${user.home}/language/vite/awesome/awesome_file_dir/
+
+logging.level:
+  org.hibernate.SQL: debug

@@ -33,8 +33,6 @@ public abstract class Storage {
     @Column(name = "user_id")
     private Long userId;
 
-    private String path;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

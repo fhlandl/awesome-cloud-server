@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class CreateItemDto {
+public class CreateNodeDto {
     private String name;
     private String userName;
     private String type;
