@@ -1,8 +1,8 @@
 package fhlandl.awesome_cloud_server.util;
 
-import fhlandl.awesome_cloud_server.domain.Storage;
-import fhlandl.awesome_cloud_server.domain.StorageDirectory;
-import fhlandl.awesome_cloud_server.domain.StorageFile;
+import fhlandl.awesome_cloud_server.domain.storage.Storage;
+import fhlandl.awesome_cloud_server.domain.storage.StorageDirectory;
+import fhlandl.awesome_cloud_server.domain.storage.StorageFile;
 import fhlandl.awesome_cloud_server.dto.CreateNodeDto;
 
 import java.time.LocalDateTime;

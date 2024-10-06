@@ -1,4 +1,4 @@
-package fhlandl.awesome_cloud_server.domain;
+package fhlandl.awesome_cloud_server.domain.storage;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;

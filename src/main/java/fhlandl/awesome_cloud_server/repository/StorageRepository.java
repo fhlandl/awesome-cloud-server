@@ -1,8 +1,7 @@
 package fhlandl.awesome_cloud_server.repository;
 
-import fhlandl.awesome_cloud_server.domain.Storage;
+import fhlandl.awesome_cloud_server.domain.storage.Storage;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

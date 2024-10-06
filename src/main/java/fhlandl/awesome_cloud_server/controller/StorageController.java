@@ -1,6 +1,6 @@
 package fhlandl.awesome_cloud_server.controller;
 
-import fhlandl.awesome_cloud_server.domain.Storage;
+import fhlandl.awesome_cloud_server.domain.storage.Storage;
 import fhlandl.awesome_cloud_server.dto.CreateNodeDto;
 import fhlandl.awesome_cloud_server.dto.CreateResultDto;
 import fhlandl.awesome_cloud_server.dto.FetchDataDto;
@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

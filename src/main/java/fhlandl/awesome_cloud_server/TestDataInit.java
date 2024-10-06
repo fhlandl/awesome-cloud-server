@@ -1,6 +1,6 @@
 package fhlandl.awesome_cloud_server;
 
-import fhlandl.awesome_cloud_server.domain.Storage;
+import fhlandl.awesome_cloud_server.domain.storage.Storage;
 import fhlandl.awesome_cloud_server.repository.StorageRepository;
 import fhlandl.awesome_cloud_server.util.StorageUtil;
 import jakarta.annotation.PostConstruct;

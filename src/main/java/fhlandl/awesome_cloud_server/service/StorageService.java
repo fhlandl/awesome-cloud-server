@@ -1,6 +1,6 @@
 package fhlandl.awesome_cloud_server.service;
 
-import fhlandl.awesome_cloud_server.domain.Storage;
+import fhlandl.awesome_cloud_server.domain.storage.Storage;
 import fhlandl.awesome_cloud_server.dto.CreatedFileDto;
 import fhlandl.awesome_cloud_server.dto.CreateNodeDto;
 import fhlandl.awesome_cloud_server.dto.CreateResultDto;
