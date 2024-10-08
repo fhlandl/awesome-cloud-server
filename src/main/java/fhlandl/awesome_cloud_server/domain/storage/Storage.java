@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "stype")
+@DiscriminatorColumn(name = "dtype")
 @Getter @Setter
 public abstract class Storage {
 
@@ -23,6 +23,9 @@ public abstract class Storage {
     private Long id;
 
     private String name;
+
+    @Column(name = "dtype", insertable = false, updatable = false)
+    private String dType;
 
     @Column(name = "unique_id")
     private String uniqueId;

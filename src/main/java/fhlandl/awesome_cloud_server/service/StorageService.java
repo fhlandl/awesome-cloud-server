@@ -24,18 +24,19 @@ public class StorageService {
     private final FileStore fileStore;
 
     @Transactional
-    public CreateResultDto saveNode(CreateNodeDto createNodeDto) throws IOException {
-
+    public CreateResultDto saveNode(Long userId, CreateNodeDto createNodeDto) throws IOException {
         String uniqueId = StorageUtil.createUniqueId();
         String storedPath = null;
 
-        if (createNodeDto.getType().equals("F")) {
-            CreatedFileDto createdFileDto = fileStore.storeFile(new StoreFileVO(createNodeDto.getFile(), createNodeDto.getUserName(), uniqueId));
+        if (createNodeDto.getDType().equals("F")) {
+            // ToDo: get user name from UserRepository by userId
+            String userName = "username";
+            CreatedFileDto createdFileDto = fileStore.storeFile(new StoreFileVO(createNodeDto.getFile(), userName, uniqueId));
             storedPath = createdFileDto.getStoredPath();
         }
-        storageRepository.save(StorageUtil.createStorageItem(createNodeDto, uniqueId, storedPath));
+        storageRepository.save(StorageUtil.createStorageItem(createNodeDto, userId, uniqueId, storedPath));
 
-        return new CreateResultDto(createNodeDto.getName(), createNodeDto.getType(), uniqueId);
+        return new CreateResultDto(createNodeDto.getName(), createNodeDto.getDType(), uniqueId);
     }
 
     public List<Storage> findNodes(long userId) {

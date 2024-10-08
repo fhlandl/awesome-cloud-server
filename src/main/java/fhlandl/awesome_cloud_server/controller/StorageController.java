@@ -29,7 +29,7 @@ public class StorageController {
         List<Storage> nodes = storageService.findNodes(TEMP_USER_ID);
 
         List<FileSystemDto> fileSystem = nodes.stream()
-                .map((node) -> new FileSystemDto(node.getId(), node.getName(), node.getParentId()))
+                .map((node) -> new FileSystemDto(node.getId(), node.getName(), node.getDType(), node.getParentId()))
                 .collect(Collectors.toList());
         FetchDataDto fetchDataDto = new FetchDataDto(fileSystem);
         return fetchDataDto;
@@ -37,6 +37,7 @@ public class StorageController {
 
     @PostMapping("/new")
     public CreateResultDto createItem(@ModelAttribute CreateNodeDto createNodeDto) throws IOException {
-        return storageService.saveNode(createNodeDto);
+        // ToDo: Get user id from session
+        return storageService.saveNode(0L, createNodeDto);
     }
 }
