@@ -21,8 +21,9 @@ public class TestDataInit {
     @PostConstruct
     public void init() {
         log.info("test data init");
-        Storage dir1 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir1", "D", null, null), 0L, "", ""));
-        Storage dir2 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir2", "D", null, null), 0L, "", ""));
+        Storage root = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("root", "D", null, null), 0L, "", ""));
+        Storage dir1 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir1", "D", root.getId(), null), 0L, "", ""));
+        Storage dir2 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir2", "D", root.getId(), null), 0L, "", ""));
         Storage dir3 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir3", "D", dir1.getId(), null), 0L, "", ""));
         Storage dir4 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir4", "D", dir1.getId(), null), 0L, "", ""));
         Storage dir5 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir5", "D", dir2.getId(), null), 0L, "", ""));
