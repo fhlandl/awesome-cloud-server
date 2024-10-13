@@ -7,8 +7,15 @@ import fhlandl.awesome_cloud_server.util.StorageUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 @Slf4j
 @Component
@@ -16,11 +23,20 @@ import org.springframework.stereotype.Component;
 @Profile("dev")
 public class TestDataInit {
 
+    @Value("${file.dir}")
+    private String rootPath;
+
+    private int userId = 1124;
+
+    @Autowired
     private final StorageRepository storageRepository;
 
     @PostConstruct
     public void init() {
         log.info("test data init");
+
+        createFiles();
+
         Storage root = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("root", "D", null, null), 0L, "", ""));
         Storage dir1 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir1", "D", root.getId(), null), 0L, "", ""));
         Storage dir2 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir2", "D", root.getId(), null), 0L, "", ""));
@@ -42,5 +58,44 @@ public class TestDataInit {
         Storage file8 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File8.doc", "F", dir3.getId(), null), 0L, "", ""));
         Storage file9 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File9.docx", "F", dir3.getId(), null), 0L, "", ""));
         Storage file10 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File10.zip", "F", dir3.getId(), null), 0L, "", ""));
+    }
+
+    private void createFiles() {
+
+        createFile(rootPath + userId + "/File1.txt");
+        createFile(rootPath + userId + "/File2.mp3");
+        createFile(rootPath + userId + "/File3.pdf");
+        createFile(rootPath + userId + "/File4.xls");
+        createFile(rootPath + userId + "/File5.xlsx");
+        createFile(rootPath + userId + "/File6.ppt");
+        createFile(rootPath + userId + "/File7.pptx");
+        createFile(rootPath + userId + "/File8.doc");
+        createFile(rootPath + userId + "/File9.docx");
+        createFile(rootPath + userId + "/File10.zip");
+    }
+
+    private void createFile(String path) {
+        validateParentDirectoryExistence(path);
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(path);
+            writer.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void validateParentDirectoryExistence(String filePath) {
+        File file = new File(filePath);
+        File parentDir = file.getParentFile();
+
+        if (parentDir != null && !parentDir.exists()) {
+            boolean isDirCreated = parentDir.mkdirs();
+            if (!isDirCreated) {
+                log.error("Failed to create parent directory: " + parentDir.getAbsolutePath());
+            }
+
+        }
     }
 }
