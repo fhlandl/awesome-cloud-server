@@ -30,8 +30,7 @@ public class StorageService {
 
         if (createNodeDto.getDType().equals("F")) {
             // ToDo: get user name from UserRepository by userId
-            String userName = "username";
-            CreatedFileDto createdFileDto = fileStore.storeFile(new StoreFileVO(createNodeDto.getFile(), userName, uniqueId));
+            CreatedFileDto createdFileDto = fileStore.storeFile(new StoreFileVO(createNodeDto.getFile(), userId, uniqueId));
             storedPath = createdFileDto.getStoredPath();
         }
         storageRepository.save(StorageUtil.createStorageItem(createNodeDto, userId, uniqueId, storedPath));

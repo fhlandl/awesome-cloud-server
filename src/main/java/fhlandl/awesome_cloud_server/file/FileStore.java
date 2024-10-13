@@ -25,18 +25,18 @@ public class FileStore {
             return null;
         }
 
-        validateUserDirectory(storeFileVO.getUserName());
+        validateUserDirectory(storeFileVO.getUserId());
 
         String originalFilename = multipartFile.getOriginalFilename();
         String storedFileName = createStoredFileName(Objects.requireNonNull(originalFilename), storeFileVO.getUniqueId());
-        String storedPath = getFullPath(storedFileName, storeFileVO.getUserName());
+        String storedPath = getFullPath(storedFileName, storeFileVO.getUserId());
 
         multipartFile.transferTo(new File(storedPath));
         return new CreatedFileDto(originalFilename, storedFileName, storedPath);
     }
 
-    private void validateUserDirectory(String userName) throws IOException {
-        Path userPath = Paths.get(rootPath + userName);
+    private void validateUserDirectory(long userId) throws IOException {
+        Path userPath = Paths.get(rootPath + userId);
         if (!Files.exists(userPath)) {
             Files.createDirectories(userPath);
         }
@@ -48,7 +48,7 @@ public class FileStore {
         return uniqueId + "." + ext;
     }
 
-    private String getFullPath(String fileName, String userName) {
-        return rootPath + userName + "/" + fileName;
+    private String getFullPath(String fileName, long userId) {
+        return rootPath + userId + "/" + fileName;
     }
 }
