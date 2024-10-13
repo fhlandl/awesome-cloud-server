@@ -32,10 +32,15 @@ public class TestDataInit {
         Storage dir8 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir8", "D", dir6.getId(), null), 0L, "", ""));
         Storage dir10 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir10", "D", dir3.getId(), null), 0L, "", ""));
         Storage dir11 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("dir11", "D", dir6.getId(), null), 0L, "", ""));
-        Storage file1 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("file1", "F", dir3.getId(), null), 0L, "", ""));
-        Storage file2 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("file2", "F", dir4.getId(), null), 0L, "", ""));
-        Storage file3 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("file3", "F", dir5.getId(), null), 0L, "", ""));
-        Storage file4 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("file4", "F", dir6.getId(), null), 0L, "", ""));
-
+        Storage file1 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File1.txt", "F", dir3.getId(), null), 0L, "", ""));
+        Storage file2 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File2.mp3", "F", dir4.getId(), null), 0L, "", ""));
+        Storage file3 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File3.pdf", "F", dir5.getId(), null), 0L, "", ""));
+        Storage file4 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File4.xls", "F", dir6.getId(), null), 0L, "", ""));
+        Storage file5 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File5.xlsx", "F", dir3.getId(), null), 0L, "", ""));
+        Storage file6 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File6.ppt", "F", dir3.getId(), null), 0L, "", ""));
+        Storage file7 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File7.pptx", "F", dir3.getId(), null), 0L, "", ""));
+        Storage file8 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File8.doc", "F", dir3.getId(), null), 0L, "", ""));
+        Storage file9 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File9.docx", "F", dir3.getId(), null), 0L, "", ""));
+        Storage file10 = storageRepository.save(StorageUtil.createStorageItem(new CreateNodeDto("File10.zip", "F", dir3.getId(), null), 0L, "", ""));
     }
 }

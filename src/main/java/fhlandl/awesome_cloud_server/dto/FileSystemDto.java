@@ -12,4 +12,6 @@ public class FileSystemDto {
     @JsonProperty("dType")
     private String dType;
     private Long parentId;
+    private String lastModifiedAt;
+    private String userName;
 }

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,11 +27,19 @@ public class StorageController {
     public FetchDataDto fetchData() {
         // ToDo: apply filtering by user id
         long TEMP_USER_ID = 0L;
+        String TEMP_USER_NAME = "user_name";
         List<Storage> nodes = storageService.findNodes(TEMP_USER_ID);
 
         List<FileSystemDto> fileSystem = nodes.stream()
-                .map((node) -> new FileSystemDto(node.getId(), node.getName(), node.getDType(), node.getParentId()))
+                .map((node) -> new FileSystemDto(
+                        node.getId(),
+                        node.getName(),
+                        node.getDType(),
+                        node.getParentId(),
+                        node.getLastModifiedAt().format(DateTimeFormatter.ofPattern("yyyy.M.d a h:m")),
+                        TEMP_USER_NAME))
                 .collect(Collectors.toList());
+
         FetchDataDto fetchDataDto = new FetchDataDto(fileSystem);
         return fetchDataDto;
     }
