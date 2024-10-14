@@ -38,6 +38,10 @@ public class StorageService {
         return new CreateResultDto(createNodeDto.getName(), createNodeDto.getDType(), uniqueId);
     }
 
+    public Storage findNode(long nodeId) {
+        return storageRepository.findOne(nodeId);
+    }
+
     public List<Storage> findNodes(long userId) {
         return storageRepository.findAll(userId);
     }
