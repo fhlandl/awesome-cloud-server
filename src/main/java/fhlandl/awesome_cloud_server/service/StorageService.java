@@ -7,6 +7,7 @@ import fhlandl.awesome_cloud_server.dto.CreateResultDto;
 import fhlandl.awesome_cloud_server.file.FileStore;
 import fhlandl.awesome_cloud_server.repository.StorageRepository;
 import fhlandl.awesome_cloud_server.util.StorageUtil;
+import fhlandl.awesome_cloud_server.vo.CreateStorageItemVO;
 import fhlandl.awesome_cloud_server.vo.StoreFileVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,13 +28,16 @@ public class StorageService {
     public CreateResultDto saveNode(Long userId, CreateNodeDto createNodeDto) throws IOException {
         String uniqueId = StorageUtil.createUniqueId();
         String storedPath = null;
+        Long fileSize = null;
 
         if (createNodeDto.getDType().equals("F")) {
             // ToDo: get user name from UserRepository by userId
             CreatedFileDto createdFileDto = fileStore.storeFile(new StoreFileVO(createNodeDto.getFile(), userId, uniqueId));
             storedPath = createdFileDto.getStoredPath();
+            fileSize = createNodeDto.getFile().getSize();
         }
-        storageRepository.save(StorageUtil.createStorageItem(createNodeDto, userId, uniqueId, storedPath));
+        CreateStorageItemVO createStorageItemVO = new CreateStorageItemVO(createNodeDto.getName(), createNodeDto.getDType(), createNodeDto.getParentId(), fileSize);
+        storageRepository.save(StorageUtil.createStorageItem(createStorageItemVO, userId, uniqueId, storedPath));
 
         return new CreateResultDto(createNodeDto.getName(), createNodeDto.getDType(), uniqueId);
     }

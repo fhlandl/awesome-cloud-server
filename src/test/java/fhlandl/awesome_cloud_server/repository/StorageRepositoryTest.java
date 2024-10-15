@@ -24,10 +24,12 @@ class StorageRepositoryTest {
     @Rollback(false)
     void save() {
         // given
-        Storage file1 = new StorageFile();
-        file1.setName("file1");
-        StorageDirectory dir1 = new StorageDirectory();
-        dir1.setName("dir1");
+        Storage file1 = StorageFile.builder()
+            .name("file1")
+            .build();
+        StorageDirectory dir1 = StorageDirectory.builder()
+            .name("dir1")
+            .build();
 
         // when
         Storage savedFile = storageRepository.save(file1);

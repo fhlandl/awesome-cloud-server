@@ -22,21 +22,26 @@ class StorageServiceTest {
     StorageRepository storageRepository;
     @Test
     void findNodes() {
-        StorageFile file1 = new StorageFile();
-        file1.setName("file1");
-        file1.setUserId(0L);
-        StorageFile file2 = new StorageFile();
-        file2.setName("file2");
-        file2.setUserId(0L);
-        StorageFile file3 = new StorageFile();
-        file3.setName("file3");
-        file3.setUserId(0L);
-        StorageDirectory dir1 = new StorageDirectory();
-        dir1.setName("dir1");
-        dir1.setUserId(0L);
-        StorageDirectory dir2 = new StorageDirectory();
-        dir2.setName("dir2");
-        dir2.setUserId(0L);
+        StorageFile file1 = StorageFile.builder()
+            .name("file1")
+            .userId(0L)
+            .build();
+        StorageFile file2 = StorageFile.builder()
+            .name("file2")
+            .userId(0L)
+            .build();
+        StorageFile file3 = StorageFile.builder()
+            .name("file3")
+            .userId(0L)
+            .build();
+        StorageDirectory dir1 = StorageDirectory.builder()
+            .name("dir1")
+            .userId(0L)
+            .build();
+        StorageDirectory dir2 = StorageDirectory.builder()
+            .name("dir2")
+            .userId(0L)
+            .build();
 
         storageRepository.save(file1);
         storageRepository.save(file2);
