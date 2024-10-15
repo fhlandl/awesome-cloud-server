@@ -8,6 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 public class StoreFileVO {
     private final MultipartFile multipartFile;
-    private final String userName;
+    private final long userId;
     private final String uniqueId;
 }
