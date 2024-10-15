@@ -11,7 +11,6 @@ import java.util.UUID;
 public class StorageUtil {
 
     public static Storage createStorageItem(CreateNodeDto itemDto,Long userId, String uniqueId, String storedPath) {
-        LocalDateTime now = LocalDateTime.now();
         if (itemDto.getDType().equals("F")) {
             StorageFile file = new StorageFile();
             file.setName(itemDto.getName());
@@ -22,8 +21,6 @@ public class StorageUtil {
                 file.setSize(itemDto.getFile().getSize());
             }
             file.setStoredPath(storedPath);
-            file.setCreatedAt(now);
-            file.setLastModifiedAt(now);
             return file;
         } else {
             StorageDirectory directory = new StorageDirectory();
@@ -31,8 +28,6 @@ public class StorageUtil {
             directory.setUserId(userId);
             directory.setParentId(itemDto.getParentId());
             directory.setUniqueId(uniqueId);
-            directory.setCreatedAt(now);
-            directory.setLastModifiedAt(now);
             return directory;
         }
     }
