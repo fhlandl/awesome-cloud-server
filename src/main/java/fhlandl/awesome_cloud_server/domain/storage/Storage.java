@@ -1,13 +1,8 @@
 package fhlandl.awesome_cloud_server.domain.storage;
 
 import fhlandl.awesome_cloud_server.domain.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import fhlandl.awesome_cloud_server.domain.user.User;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +31,7 @@ public abstract class Storage extends BaseTimeEntity {
     @Column(name = "parent_id")
     private Long parentId;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

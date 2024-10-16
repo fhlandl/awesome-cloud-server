@@ -1,6 +1,7 @@
 package fhlandl.awesome_cloud_server.service;
 
 import fhlandl.awesome_cloud_server.domain.storage.Storage;
+import fhlandl.awesome_cloud_server.domain.user.User;
 import fhlandl.awesome_cloud_server.dto.CreatedFileDto;
 import fhlandl.awesome_cloud_server.dto.CreateNodeDto;
 import fhlandl.awesome_cloud_server.dto.CreateResultDto;
@@ -25,19 +26,18 @@ public class StorageService {
     private final FileStore fileStore;
 
     @Transactional
-    public CreateResultDto saveNode(Long userId, CreateNodeDto createNodeDto) throws IOException {
+    public CreateResultDto saveNode(User user, CreateNodeDto createNodeDto) throws IOException {
         String uniqueId = StorageUtil.createUniqueId();
         String storedPath = null;
         Long fileSize = null;
 
         if (createNodeDto.getDType().equals("F")) {
-            // ToDo: get user name from UserRepository by userId
-            CreatedFileDto createdFileDto = fileStore.storeFile(new StoreFileVO(createNodeDto.getFile(), userId, uniqueId));
+            CreatedFileDto createdFileDto = fileStore.storeFile(new StoreFileVO(createNodeDto.getFile(), user.getId(), uniqueId));
             storedPath = createdFileDto.getStoredPath();
             fileSize = createNodeDto.getFile().getSize();
         }
         CreateStorageItemVO createStorageItemVO = new CreateStorageItemVO(createNodeDto.getName(), createNodeDto.getDType(), createNodeDto.getParentId(), fileSize);
-        storageRepository.save(StorageUtil.createStorageItem(createStorageItemVO, userId, uniqueId, storedPath));
+        storageRepository.save(StorageUtil.createStorageItem(createStorageItemVO, user, uniqueId, storedPath));
 
         return new CreateResultDto(createNodeDto.getName(), createNodeDto.getDType(), uniqueId);
     }

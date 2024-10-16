@@ -28,7 +28,7 @@ public class StorageRepository {
     }
 
     public List<Storage> findAll(long userId) {
-        String jpql = "select s from Storage s where s.userId = :userId";
+        String jpql = "select s from Storage s where s.user.id = :userId";
         TypedQuery<Storage> query = em.createQuery(jpql, Storage.class);
         return query.setParameter("userId", userId).getResultList();
 
