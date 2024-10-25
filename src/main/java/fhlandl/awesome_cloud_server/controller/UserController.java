@@ -4,12 +4,16 @@ import fhlandl.awesome_cloud_server.domain.user.User;
 import fhlandl.awesome_cloud_server.dto.user.LoginRequest;
 import fhlandl.awesome_cloud_server.dto.user.SignUpRequest;
 import fhlandl.awesome_cloud_server.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.NoSuchElementException;
 
 
 @RestController
@@ -34,11 +38,19 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest dto) {
-        User user = userService.login(dto);
-        if (user == null) {
-            return ResponseEntity.ok("User Login Failed");
+    public ResponseEntity<?> login(@RequestBody LoginRequest dto, HttpServletRequest request) {
+        try {
+            User user = userService.login(dto);
+            if (user == null) {
+                throw new NoSuchElementException("User Login Failed");
+            }
+
+            HttpSession session = request.getSession();
+            session.setAttribute(SessionConst.LOGIN_MEMBER, user);
+
+            return ResponseEntity.ok("User Logged in successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok("User Logged in successfully");
     }
 }
