@@ -26,11 +26,7 @@ public class UserController {
     @PostMapping("/new")
     public ResponseEntity<?> signup(@RequestBody SignUpRequest dto) {
         try {
-            User user = User.builder()
-                .loginId(dto.getLoginId())
-                .password(dto.getPassword())
-                .build();
-            userService.signup(user);
+            userService.signup(dto);
             return ResponseEntity.ok("User created successfully");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -1,7 +1,9 @@
 package fhlandl.awesome_cloud_server;
 
 import fhlandl.awesome_cloud_server.domain.storage.Storage;
+import fhlandl.awesome_cloud_server.domain.user.User;
 import fhlandl.awesome_cloud_server.repository.StorageRepository;
+import fhlandl.awesome_cloud_server.repository.UserRepository;
 import fhlandl.awesome_cloud_server.util.StorageUtil;
 import fhlandl.awesome_cloud_server.vo.CreateStorageItemVO;
 import jakarta.annotation.PostConstruct;
@@ -10,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
@@ -30,13 +33,28 @@ public class TestDataInit {
 
     private long userId = 0L;
 
-    @Autowired
     private final StorageRepository storageRepository;
+
+    private final UserRepository userRepository;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostConstruct
     public void init() {
         log.info("test data init");
+        initUser();
+        initStorage();
+    }
 
+    private void initUser() {
+        User user = User.builder()
+                .loginId("kyungjun_min")
+                .password(bCryptPasswordEncoder.encode("qwer1234!"))
+                .build();
+        userRepository.save(user);
+    }
+
+    private void initStorage() {
         Storage root = storageRepository.save(StorageUtil.createStorageItem(new CreateStorageItemVO("root", "D", null, null), 0L, StorageUtil.createUniqueId(), ""));
         Storage dir1 = storageRepository.save(StorageUtil.createStorageItem(new CreateStorageItemVO("dir1", "D", root.getId(), null), 0L, StorageUtil.createUniqueId(), ""));
         Storage dir2 = storageRepository.save(StorageUtil.createStorageItem(new CreateStorageItemVO("dir2", "D", root.getId(), null), 0L, StorageUtil.createUniqueId(), ""));
