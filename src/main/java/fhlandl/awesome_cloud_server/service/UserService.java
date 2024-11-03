@@ -26,6 +26,7 @@ public class UserService {
         User user = User.builder()
                 .loginId(dto.getLoginId())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
+                .name(dto.getName())
                 .build();
         userRepository.save(user);
         return user.getId();

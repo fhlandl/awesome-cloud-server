@@ -3,17 +3,18 @@ package fhlandl.awesome_cloud_server.util;
 import fhlandl.awesome_cloud_server.domain.storage.Storage;
 import fhlandl.awesome_cloud_server.domain.storage.StorageDirectory;
 import fhlandl.awesome_cloud_server.domain.storage.StorageFile;
+import fhlandl.awesome_cloud_server.domain.user.User;
 import fhlandl.awesome_cloud_server.vo.CreateStorageItemVO;
 
 import java.util.UUID;
 
 public class StorageUtil {
 
-    public static Storage createStorageItem(CreateStorageItemVO itemVO, Long userId, String uniqueId, String storedPath) {
+    public static Storage createStorageItem(CreateStorageItemVO itemVO, User user, String uniqueId, String storedPath) {
         if (itemVO.getDType().equals("F")) {
             return StorageFile.builder()
                 .name(itemVO.getName())
-                .userId(userId)
+                .user(user)
                 .parentId(itemVO.getParentId())
                 .uniqueId(uniqueId)
                 .size(itemVO.getFileSize())
@@ -22,7 +23,7 @@ public class StorageUtil {
         } else {
             return StorageDirectory.builder()
                 .name(itemVO.getName())
-                .userId(userId)
+                .user(user)
                 .parentId(itemVO.getParentId())
                 .uniqueId(uniqueId)
                 .build();

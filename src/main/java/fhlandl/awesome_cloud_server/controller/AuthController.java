@@ -16,7 +16,7 @@ public class AuthController {
     public ResponseEntity<?> homeLogin(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User loginUser) {
 
         if (loginUser == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("Session Not Found");
         }
 

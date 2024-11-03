@@ -40,10 +40,12 @@ class UserServiceTest {
         SignUpRequest signUpRequest1 = new SignUpRequest();
         signUpRequest1.setLoginId("id1");
         signUpRequest1.setPassword("pw1");
+        signUpRequest1.setName("user1");
 
         SignUpRequest signUpRequest2 = new SignUpRequest();
         signUpRequest2.setLoginId("id1");
         signUpRequest2.setPassword("pw2");
+        signUpRequest1.setName("user2");
 
         userService.signup(signUpRequest1);
 
@@ -57,6 +59,7 @@ class UserServiceTest {
         SignUpRequest signUpRequest = new SignUpRequest();
         signUpRequest.setLoginId("id1");
         signUpRequest.setPassword("pw1");
+        signUpRequest.setName("user1");
 
         userService.signup(signUpRequest);
 
@@ -74,6 +77,7 @@ class UserServiceTest {
         SignUpRequest signUpRequest = new SignUpRequest();
         signUpRequest.setLoginId("id1");
         signUpRequest.setPassword("pw1");
+        signUpRequest.setName("user1");
 
         userService.signup(signUpRequest);
 

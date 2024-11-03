@@ -1,16 +1,15 @@
 package fhlandl.awesome_cloud_server.domain.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import fhlandl.awesome_cloud_server.domain.storage.Storage;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,9 +27,12 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-//    @Column(nullable = false)
-//    private String name;
-//
+    @OneToMany(mappedBy = "user")
+    private List<Storage> storages = new ArrayList<>();
+
+    @Column(nullable = false)
+    private String name;
+
 //    private String email;
 //
 //    @Column(name = "phone_number")
@@ -39,8 +41,9 @@ public class User {
 //    private Date birthday;
 
     @Builder
-    public User(String loginId, String password) {
+    public User(String loginId, String password, String name) {
         this.loginId = loginId;
         this.password = password;
+        this.name = name;
     }
 }

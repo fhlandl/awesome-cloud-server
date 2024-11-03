@@ -6,7 +6,9 @@ import fhlandl.awesome_cloud_server.dto.user.SignUpRequest;
 import fhlandl.awesome_cloud_server.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.NoSuchElementException;
 
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -24,7 +26,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/new")
-    public ResponseEntity<?> signup(@RequestBody SignUpRequest dto) {
+    public ResponseEntity<?> signup(@RequestBody @Valid SignUpRequest dto) {
         try {
             userService.signup(dto);
             return ResponseEntity.ok("User created successfully");
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest dto, HttpServletRequest request) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest dto, HttpServletRequest request) {
         try {
             User user = userService.login(dto);
             if (user == null) {
@@ -43,6 +45,7 @@ public class UserController {
 
             HttpSession session = request.getSession();
             session.setAttribute(SessionConst.LOGIN_MEMBER, user);
+            log.info("Session Created");
 
             return ResponseEntity.ok("User Logged in successfully");
         } catch (RuntimeException e) {
@@ -55,6 +58,7 @@ public class UserController {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
+            log.info("Session Removed");
         }
         return ResponseEntity.ok("User logged out successfully");
     }
