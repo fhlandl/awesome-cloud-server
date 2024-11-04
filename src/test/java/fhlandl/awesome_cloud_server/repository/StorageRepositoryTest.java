@@ -15,13 +15,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@Transactional
 class StorageRepositoryTest {
 
     @Autowired StorageRepository storageRepository;
 
     @Test
-    @Transactional
-    @Rollback(false)
+//    @Rollback(false)
     void save() {
         // given
         Storage file1 = StorageFile.builder()
