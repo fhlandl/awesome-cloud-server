@@ -9,6 +9,5 @@ import org.springframework.web.multipart.MultipartFile;
 public class CreateStorageItemVO {
     private String name;
     private String dType;
-    private Long parentId;
     private Long fileSize;
 }

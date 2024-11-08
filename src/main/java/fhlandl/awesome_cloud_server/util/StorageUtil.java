@@ -10,12 +10,12 @@ import java.util.UUID;
 
 public class StorageUtil {
 
-    public static Storage createStorageItem(CreateStorageItemVO itemVO, User user, String uniqueId, String storedPath) {
+    public static Storage createStorageItem(CreateStorageItemVO itemVO, User user, Storage parent, String uniqueId, String storedPath) {
         if (itemVO.getDType().equals("F")) {
             return StorageFile.builder()
                 .name(itemVO.getName())
                 .user(user)
-                .parentId(itemVO.getParentId())
+                .parent(parent)
                 .uniqueId(uniqueId)
                 .size(itemVO.getFileSize())
                 .storedPath(storedPath)
@@ -24,7 +24,7 @@ public class StorageUtil {
             return StorageDirectory.builder()
                 .name(itemVO.getName())
                 .user(user)
-                .parentId(itemVO.getParentId())
+                .parent(parent)
                 .uniqueId(uniqueId)
                 .build();
         }

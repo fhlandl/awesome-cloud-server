@@ -5,6 +5,7 @@ import fhlandl.awesome_cloud_server.domain.storage.StorageFile;
 import fhlandl.awesome_cloud_server.domain.user.User;
 import fhlandl.awesome_cloud_server.dto.CreateNodeDto;
 import fhlandl.awesome_cloud_server.dto.CreateResultDto;
+import fhlandl.awesome_cloud_server.dto.DeleteNodeDto;
 import fhlandl.awesome_cloud_server.dto.FetchDataDto;
 import fhlandl.awesome_cloud_server.dto.FileSystemDto;
 import fhlandl.awesome_cloud_server.service.StorageService;
@@ -36,14 +37,14 @@ public class StorageController {
 
     @GetMapping("/file-system")
     public FetchDataDto fetchData(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) User user) {
-        List<Storage> nodes = storageService.findNodes(user.getId());
+        List<Storage> nodes = storageService.findValidNodes(user.getId());
 
         List<FileSystemDto> fileSystem = nodes.stream()
             .map((node) -> new FileSystemDto(
                 node.getId(),
                 node.getName(),
                 node.getDType(),
-                node.getParentId(),
+                node.getParent() != null ? node.getParent().getId() : null,
                 node.getLastModifiedAt().format(DateTimeFormatter.ofPattern("yyyy.M.d a h:m")),
                 user.getName()))
             .collect(Collectors.toList());
@@ -55,6 +56,17 @@ public class StorageController {
     @PostMapping("/new")
     public CreateResultDto createItem(@ModelAttribute CreateNodeDto createNodeDto, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) User user) throws IOException {
         return storageService.saveNode(user, createNodeDto);
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteNode(@RequestBody DeleteNodeDto dto) {
+        try {
+            storageService.deleteNode(dto.getId());
+            return ResponseEntity.ok("Successfully Deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @GetMapping("/download/{id}")

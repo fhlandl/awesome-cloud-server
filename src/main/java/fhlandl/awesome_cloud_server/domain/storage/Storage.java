@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
@@ -28,10 +30,21 @@ public abstract class Storage extends BaseTimeEntity {
     @Column(name = "unique_id")
     private String uniqueId;
 
-    @Column(name = "parent_id")
-    private Long parentId;
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private Storage parent;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Storage> children;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
+
+    public void delete() {
+        this.isDeleted = true;
+    }
 }
